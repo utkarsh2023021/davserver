@@ -23,7 +23,8 @@ const  sessionStore = new mysqlStore(options);
 
 const app = express();
 app.use(cors({
-  origin: '*'
+  origin: '*',
+ credentials: true
 }));
 
 app.use(session({
