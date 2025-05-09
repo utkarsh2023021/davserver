@@ -24,9 +24,13 @@ const  sessionStore = new mysqlStore(options);
 const app = express();
 app.use(cors({
   origin: 'http://localhost:3000',
- credentials: true
+  credentials: true,
+  methods: ['GET','POST','OPTIONS'],
+  allowedHeaders: ['Content-Type']
 }));
+
 app.set('trust proxy',1);
+
 app.use(session({
   name: 'test',
   resave: false,
@@ -34,12 +38,13 @@ app.use(session({
   store: sessionStore,
   secret: process.env.SECRET,  
   cookie: {
-      httpOnly: true,
-      maxAge: TWO_HOURS,
-      sameSite: 'none',
-      secure: true
+    secure: true,                  // ← only over HTTPS (Render is HTTPS)
+    httpOnly: true,                // ← JS cannot read it
+    sameSite: 'none',              // ← required for cross‑site cookies
+    maxAge: 24 * 60 * 60 * 1000    // 1 day
   }
 }))
+app.options('*', cors());
 app.use(express.static('public'));
 var bodyParser=require("body-parser"); 
 const con = require('./db');
