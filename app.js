@@ -172,7 +172,7 @@ const publications=[
 //function for fetching header marquee data
 let header_marquee_data = undefined;
 function fetchMarqueeDetails(callback) {
-  const query = 'SELECT * FROM davpg.news_events_marquee ORDER BY ID DESC;';
+  const query = 'SELECT * FROM railway.news_events_marquee ORDER BY ID DESC;';
   connection.query(query, (error, results) => {
     if (error) {
       callback(error, null);
@@ -222,11 +222,11 @@ app.get('/facutly_profile/:id',(req,res)=>{
   var username = req.params.id;
   //var username = "test1@mmmut.ac.in"
   const sqlQueries = [
-    'SELECT * FROM davpg.faculty WHERE Id="'+username+'";',
-    'SELECT * FROM davpg.profession_career WHERE email="'+username+'";',
-    'SELECT * FROM davpg.award WHERE email="'+username+'";',
-    'SELECT * FROM davpg.educational_qualification WHERE email="'+username+'";',
-    'SELECT * FROM davpg.publication WHERE email="'+username+'";'
+    'SELECT * FROM railway.faculty WHERE Id="'+username+'";',
+    'SELECT * FROM railway.profession_career WHERE email="'+username+'";',
+    'SELECT * FROM railway.award WHERE email="'+username+'";',
+    'SELECT * FROM railway.educational_qualification WHERE email="'+username+'";',
+    'SELECT * FROM railway.publication WHERE email="'+username+'";'
   ];
 
   Promise.all(sqlQueries.map(query => executeQuery(query)))
@@ -359,8 +359,8 @@ app.get('/m_message', (req, res) => {
 app.post('/login_auth', (req,res)=>{
   var username=req.body.uname;
   var pass = req.body.psw;
-  var sql='SELECT * FROM davpg.user WHERE Id="'+username+'";';
-  var sql2 = 'SELECT * FROM davpg.faculty WHERE Id="'+username+'";';
+  var sql='SELECT * FROM railway.user WHERE Id="'+username+'";';
+  var sql2 = 'SELECT * FROM railway.faculty WHERE Id="'+username+'";';
   connection.query(sql, function (err, data) {
     if (err){
       throw err;
@@ -405,7 +405,7 @@ app.post('/login_auth', (req,res)=>{
   });
 });
 app.get('/viewNews', IsAdmin, (req, res) => {
-  var sql='SELECT * FROM davpg.news_events_marquee order by Type, ID DESC;';
+  var sql='SELECT * FROM railway.news_events_marquee order by Type, ID DESC;';
   connection.query(sql, function (err, data) {
     if (err){
       throw err;
@@ -420,7 +420,7 @@ app.get('/viewNews', IsAdmin, (req, res) => {
   });
 });
 app.get('/viewallnews', (req, res) => {
-  var sql='SELECT * FROM davpg.news_events_marquee WHERE Type="News" ORDER BY ID DESC;';
+  var sql='SELECT * FROM railway.news_events_marquee WHERE Type="News" ORDER BY ID DESC;';
   connection.query(sql, function (err, data) {
     if (err){
       throw err;
@@ -432,7 +432,7 @@ app.get('/viewallnews', (req, res) => {
   });
 });
 app.get('/viewallevent', (req, res) => {
-  var sql='SELECT * FROM davpg.news_events_marquee WHERE Type="Events" ORDER BY ID DESC;';
+  var sql='SELECT * FROM railway.news_events_marquee WHERE Type="Events" ORDER BY ID DESC;';
   connection.query(sql, function (err, data) {
     if (err){
       throw err;
@@ -444,7 +444,7 @@ app.get('/viewallevent', (req, res) => {
   });
 });
 app.get('/viewalumni',IsAdmin,(req, res) => {
-  var sql='SELECT * FROM davpg.alumni;';
+  var sql='SELECT * FROM railway.alumni;';
   connection.query(sql, function (err, data) {
     if (err){
       throw err;
@@ -457,7 +457,7 @@ app.get('/viewalumni',IsAdmin,(req, res) => {
 });
 app.get('/delete_news/:id/:file?', IsAdmin,(req, res) => {
   var Id= req.params.id;
-  var sql='DELETE FROM davpg.news_events_marquee WHERE Id='+Id;
+  var sql='DELETE FROM railway.news_events_marquee WHERE Id='+Id;
   connection.query(sql, function (err, data) {
     if (err){
       throw err;
@@ -503,7 +503,7 @@ app.get('/faculty_publications_upload',IsAuth, (req, res) => {
   //res.render('partials/faculty_publications_upload');
 });
 app.get('/facultylist', IsAdmin, (req, res) => {
-  var sql='SELECT * FROM davpg.faculty order by Department, Designation DESC;';
+  var sql='SELECT * FROM railway.faculty order by Department, Designation DESC;';
   connection.query(sql, function (err, data) {
     if (err){
       throw err;
@@ -516,7 +516,7 @@ app.get('/facultylist', IsAdmin, (req, res) => {
 });
 app.get('/delete_faculty/:id', IsAdmin,(req, res) => {
   var Id= req.params.id;
-  var sql="DELETE FROM davpg.faculty WHERE Id='"+Id+"'";
+  var sql="DELETE FROM railway.faculty WHERE Id='"+Id+"'";
   connection.query(sql, function (err, data) {
     if (err){
       throw err;
@@ -537,7 +537,7 @@ app.get('/nonteaching', (req, res) => {
 
 app.get('/update_faculty_experience', IsAuth, (req, res) => {
   const username = req.session.username;
-  var sql2 = 'SELECT * FROM davpg.profession_career WHERE email="'+username+'";';
+  var sql2 = 'SELECT * FROM railway.profession_career WHERE email="'+username+'";';
   connection.query(sql2, function (err, data) {
     if (err){
       throw err;
@@ -551,7 +551,7 @@ app.get('/update_faculty_experience', IsAuth, (req, res) => {
 
 app.get('/update_faculty_awards', IsAuth, (req, res) => {
   const username = req.session.username;
-  var sql2 = 'SELECT * FROM davpg.award WHERE email="'+username+'";';
+  var sql2 = 'SELECT * FROM railway.award WHERE email="'+username+'";';
   connection.query(sql2, function (err, data) {
     if (err){
       throw err;
@@ -565,7 +565,7 @@ app.get('/update_faculty_awards', IsAuth, (req, res) => {
 });
 app.get('/update_faculty_qualifications', IsAuth, (req, res) => {
   const username = req.session.username;
-  var sql2 = 'SELECT * FROM davpg.educational_qualification WHERE email="'+username+'";';
+  var sql2 = 'SELECT * FROM railway.educational_qualification WHERE email="'+username+'";';
   connection.query(sql2, function (err, data) {
     if (err){
       throw err;
@@ -578,7 +578,7 @@ app.get('/update_faculty_qualifications', IsAuth, (req, res) => {
 });
 app.get('/update_faculty_publications', IsAuth, (req, res) => {
   const username = req.session.username;
-  var sql2 = 'SELECT * FROM davpg.publication WHERE email="'+username+'";';
+  var sql2 = 'SELECT * FROM railway.publication WHERE email="'+username+'";';
   connection.query(sql2, function (err, data) {
     if (err){
       throw err;
@@ -591,7 +591,7 @@ app.get('/update_faculty_publications', IsAuth, (req, res) => {
 });
 app.get('/faculty_dashboard', IsAuth, (req, res) => {
   const username = req.session.username;
-  var sql2 = 'SELECT * FROM davpg.faculty WHERE Id="'+username+'";';
+  var sql2 = 'SELECT * FROM railway.faculty WHERE Id="'+username+'";';
   connection.query(sql2, function (err, data) {
     if (err){
       throw err;
@@ -629,7 +629,7 @@ app.post('/uploadnews', upload.single('myfile'), (req, res, next) => {
           fname = req.file.filename;
         else
           fname='';
-        var sql= 'INSERT INTO davpg.news_events_marquee (Title , Type , Link) VALUES (?,?,?);';
+        var sql= 'INSERT INTO railway.news_events_marquee (Title , Type , Link) VALUES (?,?,?);';
         connection.query(sql, [title,type,fname],function (err, data) {
           if (err){
             throw err;
@@ -660,7 +660,7 @@ app.post('/reg_sub', upload.single('photo') , (req, res, next)=>{
     var workingplace = req.body.workingplace;
     var specialization = req.body.specialization;
     var fname = req.file.filename;
-    var sql= 'INSERT INTO davpg.alumni (Name,Father,Mother,Dob,Address,Gender,Email,Mobile,Photo,Degree,YearofPassing,Designation,WorkingAddress,Specialization) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?);';    
+    var sql= 'INSERT INTO railway.alumni (Name,Father,Mother,Dob,Address,Gender,Email,Mobile,Photo,Degree,YearofPassing,Designation,WorkingAddress,Specialization) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?);';    
         connection.query(sql, [name_f,father,mother,dob,Address,gender,email,MoNo,fname,degree,year,designation,workingplace,specialization],function (err, data) {
           if (err){
             throw err;
@@ -684,20 +684,20 @@ app.post('/update_faculty_details', upload.fields([{name:'photo',maxCount:1},{na
     const newResume = req.files['resume'] ? req.files['resume'][0] : null;
     if(newPhoto){
       imageFile = newPhoto.filename;
-      connection.query('update davpg.faculty set photo = ? where Id = ?',[imageFile,email],(err,data)=>{
+      connection.query('update railway.faculty set photo = ? where Id = ?',[imageFile,email],(err,data)=>{
         if(err) throw err;
         else console.log('Image updated');
       });
     }
     if(newResume){
       resumeFile = newResume.filename;
-      connection.query('update davpg.faculty set resume = ? where Id = ?',[resumeFile,email],(err,data)=>{
+      connection.query('update railway.faculty set resume = ? where Id = ?',[resumeFile,email],(err,data)=>{
         if(err) throw err;
         else console.log('Resume updated');
       });
     }
     
-    var sql= 'UPDATE davpg.faculty SET phone=?, area_of_interest=?,highest_qualification=?, teaching_experience=?, publications_books_patents=?, seminar_conference_workshop_organized=?,seminar_conference_workshop_attended=? , fellowship_awards=?, membership=?, masters_supervised=?, phd_supervised=?, other_info=? WHERE Id = ?;';  
+    var sql= 'UPDATE railway.faculty SET phone=?, area_of_interest=?,highest_qualification=?, teaching_experience=?, publications_books_patents=?, seminar_conference_workshop_organized=?,seminar_conference_workshop_attended=? , fellowship_awards=?, membership=?, masters_supervised=?, phd_supervised=?, other_info=? WHERE Id = ?;';  
     connection.query(sql, [phone, area_of_interest,highest_qualification, teaching_experience, publications_books_patents, seminar_conference_workshop_organized,seminar_conference_workshop_attended , fellowship_awards, membership, masters_supervised, phd_supervised, other_info,email],function (err, data) {
       if (err){
         throw err;
@@ -715,7 +715,7 @@ app.post('/update_faculty_experience', (req, res, next) => {
   const { designation, _from, _to, organization } = req.body;
   const email = req.session.username;
 
-  const sql = 'INSERT INTO davpg.profession_career (email, _from, _to, position,organization) VALUES (?, ?, ?, ?, ?)';
+  const sql = 'INSERT INTO railway.profession_career (email, _from, _to, position,organization) VALUES (?, ?, ?, ?, ?)';
   connection.query(sql, [email, _from, _to, designation, organization], function (err, data) {
     if (err) {
       console.error('Error inserting faculty experience:', err);
@@ -733,7 +733,7 @@ app.post('/update_faculty_award', (req, res, next) => {
   const { title,year, organization } = req.body;
   const email = req.session.username;
 
-  const sql = 'INSERT INTO davpg.award (email,award , year,awarding_organization) VALUES (?, ?, ?, ?)';
+  const sql = 'INSERT INTO railway.award (email,award , year,awarding_organization) VALUES (?, ?, ?, ?)';
   connection.query(sql, [email, title, year, organization], function (err, data) {
     if (err) {
       console.error('Error inserting faculty award:', err);
@@ -751,7 +751,7 @@ app.post('/update_faculty_qualification', (req, res, next) => {
   const { degree, specialisation, institute, year} = req.body;
   const email = req.session.username;
 
-  const sql = 'INSERT INTO davpg.educational_qualification (email,degree ,specialization, institute, year) VALUES (?, ?, ?, ?, ?)';
+  const sql = 'INSERT INTO railway.educational_qualification (email,degree ,specialization, institute, year) VALUES (?, ?, ?, ?, ?)';
   connection.query(sql, [email, degree, specialisation,institute, year], function (err, data) {
     if (err) {
       console.error('Error inserting faculty qualification:', err);
@@ -769,7 +769,7 @@ app.post('/update_faculty_publication', (req, res, next) => {
   const { publication ,department , category, year, month, indexing, issn , impact} = req.body;
   const email = req.session.username;
 
-  const sql = 'INSERT INTO davpg.publication (email,publication ,department , category, year, month, indexing, issnno , impactfactor) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)';
+  const sql = 'INSERT INTO railway.publication (email,publication ,department , category, year, month, indexing, issnno , impactfactor) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)';
   connection.query(sql, [email,publication ,department , category, year, month, indexing, issn , impact], function (err, data) {
     if (err) {
       console.error('Error inserting faculty publication:', err);
@@ -787,7 +787,7 @@ app.post('/delete_faculty_experience/:experienceId', (req, res) => {
   const experienceId = req.params.experienceId;
 
   // Execute a DELETE query in the database
-  const sql = 'DELETE FROM davpg.profession_career WHERE id = ?';
+  const sql = 'DELETE FROM railway.profession_career WHERE id = ?';
   connection.query(sql, [experienceId], function (err, result) {
       if (err) {
           console.error('Error deleting experience:', err);
@@ -804,7 +804,7 @@ app.post('/delete_faculty_award/:awardId', (req, res) => {
   const awardId = req.params.awardId;
 
   // Execute a DELETE query in the database
-  const sql = 'DELETE FROM davpg.award WHERE id = ?';
+  const sql = 'DELETE FROM railway.award WHERE id = ?';
   connection.query(sql, [awardId], function (err, result) {
       if (err) {
           console.error('Error deleting award:', err);
@@ -822,7 +822,7 @@ app.post('/delete_faculty_qualification/:qualificationId', (req, res) => {
   const qualificationId = req.params.qualificationId;
 
   // Execute a DELETE query in the database
-  const sql = 'DELETE FROM davpg.educational_qualification WHERE id = ?';
+  const sql = 'DELETE FROM railway.educational_qualification WHERE id = ?';
   connection.query(sql, [qualificationId], function (err, result) {
       if (err) {
           console.error('Error deleting qualification:', err);
@@ -839,7 +839,7 @@ app.post('/delete_faculty_qualification/:qualificationId', (req, res) => {
 app.post('/delete_faculty_publication/:publicationId', (req, res) => {
   const publicationId = req.params.publicationId;
 
-  const sql = 'DELETE FROM davpg.publication WHERE id = ?';
+  const sql = 'DELETE FROM railway.publication WHERE id = ?';
   connection.query(sql, [publicationId], function (err, result) {
       if (err) {
           console.error('Error deleting publication:', err);
@@ -889,7 +889,7 @@ app.post('/addfaculty', (req, res) => {
   const userType = req.body.userType;
 
   // Insert data into the user table
-  const insertUserQuery = 'INSERT INTO davpg.user (Id, Pass, UserType) VALUES (?, ?, ?)';
+  const insertUserQuery = 'INSERT INTO railway.user (Id, Pass, UserType) VALUES (?, ?, ?)';
   connection.query(insertUserQuery, [email, psw, userType], (err, result) => {
     if (err) {
       console.error('Error inserting user data:', err);
@@ -899,7 +899,7 @@ app.post('/addfaculty', (req, res) => {
     console.log('User registered successfully');
 
     // Insert data into the faculty table using the retrieved user ID
-    const insertFacultyQuery = 'INSERT INTO davpg.faculty (Id, Name, Department, Designation) VALUES (?, ?, ?, ?)';
+    const insertFacultyQuery = 'INSERT INTO railway.faculty (Id, Name, Department, Designation) VALUES (?, ?, ?, ?)';
     connection.query(insertFacultyQuery, [email, name, department, designation], (err, result) => {
       if (err) {
         console.error('Error inserting faculty data:', err);
