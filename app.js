@@ -22,7 +22,10 @@ const TWO_HOURS = 1000 * 60 * 60 * 2
 const  sessionStore = new mysqlStore(options);
 
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin: '*'
+}));
+
 app.use(session({
   name: 'test',
   resave: false,
@@ -195,6 +198,11 @@ app.get('/', (req, res) => {
       //res.render('index',{send : header_marquee_data, header_marquee_data});
       res.json({ header_marquee_data });
 });
+
+app.get('/health-check-polling', (req, res) => {
+  res.status(200).send('OK');
+});
+
 
 const IsAdmin=(req,res,next)=>{
   if(req.session.IsAdmin){
