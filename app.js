@@ -4,7 +4,7 @@ var connection = require('./db');
 const multer = require("multer")
 const path = require('path');
 const axios = require('axios');
-const secrets = require('./secrets');
+
 const fs = require('fs');
 const cors=require("cors");
 const session = require('express-session'); 
