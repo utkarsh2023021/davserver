@@ -36,8 +36,8 @@ app.use(session({
   cookie: {
       httpOnly: true,
       maxAge: TWO_HOURS,
-      sameSite: 'lax',
-      secure: false
+      sameSite: 'none',
+      secure: true
   }
 }))
 app.use(express.static('public'));
